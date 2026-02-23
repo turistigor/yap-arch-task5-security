@@ -1,0 +1,53 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-manager
+  namespace: sales
+rules:
+# Управление подами и их подресурсами
+- apiGroups: [""]
+  resources:
+    - "pods"
+    - "pods/log"
+    - "pods/exec"
+    - "pods/portforward"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление конфигурацией приложений
+- apiGroups: [""]
+  resources:
+    - "services"
+    - "configmaps"
+    - "endpoints"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление хранилищем приложений
+- apiGroups: [""]
+  resources:
+    - "persistentvolumeclaims"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление workloads
+- apiGroups: ["apps"]
+  resources:
+    - "deployments"
+    - "statefulsets"
+    - "replicasets"
+    - "daemonsets"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+- apiGroups: ["batch"]
+  resources:
+    - "jobs"
+    - "cronjobs"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+- apiGroups: ["autoscaling"]
+  resources:
+    - "horizontalpodautoscalers"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+- apiGroups: ["networking.k8s.io"]
+  resources:
+    - "ingresses"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
