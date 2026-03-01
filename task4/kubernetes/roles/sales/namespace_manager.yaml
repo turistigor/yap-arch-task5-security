@@ -1,0 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role  # ClusterRole для возможности использования в любом namespace
+metadata:
+  name: namespace-manager
+  namespace: sales
+rules:
+# Полное управление core-ресурсами в namespace
+- apiGroups: [""]
+  resources:
+    - "pods"
+    - "pods/log"
+    - "pods/exec"
+    - "pods/portforward"
+    - "services"
+    - "configmaps"
+    - "endpoints"
+    - "persistentvolumeclaims"
+    - "replicationcontrollers"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление ресурсами apps
+- apiGroups: ["apps"]
+  resources:
+    - "deployments"
+    - "statefulsets"
+    - "replicasets"
+    - "daemonsets"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление batch-ресурсами
+- apiGroups: ["batch"]
+  resources:
+    - "jobs"
+    - "cronjobs"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление автоскалингом
+- apiGroups: ["autoscaling"]
+  resources:
+    - "horizontalpodautoscalers"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление сетевыми ресурсами
+- apiGroups: ["networking.k8s.io"]
+  resources:
+    - "ingresses"
+    - "networkpolicies"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]

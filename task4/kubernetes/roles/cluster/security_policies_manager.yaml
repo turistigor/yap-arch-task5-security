@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: security-policies-manager
+rules:
+# Управление pod security policies
+- apiGroups: ["policy"]
+  resources:
+    - "podsecuritypolicies"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление сетевыми политиками
+- apiGroups: ["networking.k8s.io"]
+  resources:
+    - "networkpolicies"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление RBAC
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources:
+    - "roles"
+    - "rolebindings"
+    - "clusterroles"
+    - "clusterrolebindings"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+
+# Управление сертификатами
+- apiGroups: ["certificates.k8s.io"]
+  resources:
+    - "certificatesigningrequests"
+    - "certificatesigningrequests/approval"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch", "approve"]

@@ -1,0 +1,47 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-debugger
+  namespace: landlords
+rules:
+# Просмотр состояния приложений
+- apiGroups: [""]
+  resources:
+    - "pods"
+    - "pods/log"
+    - "services"
+    - "endpoints"
+  verbs: ["get", "list", "watch"]
+
+- apiGroups: ["apps"]
+  resources:
+    - "deployments"
+    - "statefulsets"
+    - "replicasets"
+    - "daemonsets"
+  verbs: ["get", "list", "watch"]
+
+- apiGroups: ["batch"]
+  resources:
+    - "jobs"
+    - "cronjobs"
+  verbs: ["get", "list", "watch"]
+
+- apiGroups: ["autoscaling"]
+  resources:
+    - "horizontalpodautoscalers"
+  verbs: ["get", "list", "watch"]
+
+- apiGroups: ["networking.k8s.io"]
+  resources:
+    - "ingresses"
+  verbs: ["get", "list", "watch"]
+
+# Операции для отладки приложений
+- apiGroups: [""]
+  resources:
+    - "pods/exec"
+    - "pods/portforward"
+    - "configmaps"
+    - "persistentvolumeclaims"
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
