@@ -2,11 +2,11 @@
 
 - Запуск minikube и создаём namespace
     ```bash
-    cd task4/scripts
+    cd task5/scripts
     ./start_cluster.sh
     ```
 - Для проверки действия политик
     ```bash
-    cd task4/scripts
+    cd task5/scripts
     ./test.sh
     ```
